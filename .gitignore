@@ -1,0 +1,38 @@
+# Credentials / secrets
+auth.json
+
+# Local history (can contain prompts, paths, etc.)
+history.jsonl
+
+# Logs & caches (per-user state)
+*.log
+logs/
+cache/
+caches/
+
+# Potential state DB files (varies by setup)
+*.sqlite
+*.db
+
+# Codex runtime / state
+.codex-global-state.json
+models_cache.json
+version.json
+.personality_migration
+
+# Session / shell artifacts
+sessions/
+shell_snapshots/
+tmp/
+log/
+sqlite/
+.serena/
+
+# Imported vendor data
+vendor_imports/
+
+# Built-in system skills
+skills/.system/
+
+# OS junk
+.DS_Store
