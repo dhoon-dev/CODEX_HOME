@@ -82,15 +82,15 @@ Also collect build context because it affects API/ABI:
 ## 3) Query formulation templates
 
 ### Minimal template
-"<dependency> <pinned-version> <topic> <target-surface>"
+`"<dependency> <pinned-version> <topic> <target-surface>"`
 
 ### When errors drive the work
 Include the exact error message (or its distinctive fragment):
-"<dependency> <version> <error message> <symbol>"
+`"<dependency> <version> <error message> <symbol>"`
 
 ### C / C++ specific template
 Because ABI, compiler, and build options matter:
-"<library> <version/tag> <header or symbol> <topic> <compiler> <c++standard> <build-system> <package-manager>"
+`"<library> <version/tag> <header or symbol> <topic> <compiler> <c++standard> <build-system> <package-manager>"`
 
 ## 4) Tighten in at most 2 follow-ups
 Start with one query.

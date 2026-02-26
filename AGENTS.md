@@ -47,6 +47,6 @@
 
 ## Docker Conventions
 - Default pattern:
-  - docker run --rm -it -v "$PWD":/work -w /work <image> bash -lc "<command>"
+  - `docker run --rm -it -v "$PWD":/work -w /work <image> bash -lc "<command>"`
 - If file permissions become an issue, consider:
-  - --user "$(id -u):$(id -g)"
+  - `--user "$(id -u):$(id -g)"`
