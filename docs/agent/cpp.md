@@ -9,12 +9,13 @@ Use the repository's existing build system:
 ## 2) Default CMake workflow (when CMake is present)
 Prefer out-of-source builds:
 - Configure: `cmake -S . -B build`
-- Build: `cmake --build build -j`
+- Build: `cmake --build build --parallel`
 - Test: `ctest --test-dir build --output-on-failure`
+- For multi-config generators (Visual Studio, Xcode, Ninja Multi-Config), add `--config <Debug|Release>` to `cmake --build`.
 
 If `CMakePresets.json` exists, prefer presets:
 - Configure: `cmake --preset <name>`
-- Build: `cmake --build --preset <name>`
+- Build: `cmake --build --preset <name> --parallel`
 - Test: `ctest --preset <name>`
 
 ## 3) Safety rules

@@ -57,12 +57,13 @@ If both a lockfile and requirements files exist, follow the tool invoked by scri
 - Prefer lockfiles if present (`gradle.lockfile`, dependency lock state)
 - Otherwise follow `build.gradle(.kts)` / `pom.xml` and any version catalogs (`libs.versions.toml`)
 
-### C / C++ (added)
+### C / C++
 The critical step is identifying *how* the dependency is obtained, then extracting the pinned ref.
+Treat moving targets (e.g., FetchContent `GIT_TAG` set to a branch like `main`/`master`) as unpinned; call it out and ask before relying on docs.
 
 Prefer these sources (highest signal first):
 - **vcpkg**
-  - `vcpkg.json` (manifest) + `vcpkg-configuration.json` (registry/baseline) and any lock/baseline files used by the repo
+  - `vcpkg.json` (manifest) + `vcpkg-configuration.json` (registry/builtin-baseline) and any lock/baseline files used by the repo
 - **Conan**
   - `conan.lock` (if present), otherwise `conanfile.py` / `conanfile.txt` + profiles used by CI
 - **CMake FetchContent / ExternalProject**
@@ -78,6 +79,13 @@ Prefer these sources (highest signal first):
 Also collect build context because it affects API/ABI:
 - compiler (MSVC/GCC/Clang), platform (Windows/macOS/Linux), and language standard (`-std=c++20`, etc.)
 - build system (CMake/Meson/Bazel) and enabled features/options
+
+## 2.5) Verify the resolved version (when ambiguous)
+If the pinned version is unclear (no lockfile, multiple lockfiles, vendored patches, or moving git refs), confirm the *resolved* version locally before relying on docs.
+
+- Node: use package-manager-specific equivalent commands (for example: `npm ls <pkg>`, `pnpm why <pkg>`, `yarn why <pkg>`) and/or inspect `node_modules/<pkg>/package.json` (when `node_modules` exists).
+- Python: prefer `python -m pip show <pkg>` (or inspect the installed distribution metadata) and confirm `__version__` when available.
+- C/C++: confirm vcpkg baseline/lock, conan.lock, FetchContent `GIT_TAG`/hash, or the submodule commit; for vendored deps, treat `third_party/` as authoritative.
 
 ## 3) Query formulation templates
 
