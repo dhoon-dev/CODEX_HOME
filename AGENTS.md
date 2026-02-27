@@ -5,6 +5,7 @@
 - Treat existing lockfiles, build/test scripts, package scripts, and CI commands as project specifications.
 - Unless a translation is explicitly requested, all generated documents and source code must be written in English.
 - If the request is ambiguous, ask a clarifying question before making changes.
+- Do not use inline meta/editorial annotations to track document changes or status (especially in headings). Use git history/commits instead.
 
 ## External Docs (Context7)
 - When implementing or changing code that depends on ANY third-party library/framework/SDK/CLI/config (anything version-sensitive),
