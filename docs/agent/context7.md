@@ -1,8 +1,7 @@
 # Context7 Query Quality Playbook
 
-This document defines how to produce high-signal queries to the Context7 MCP
-server and how to validate what comes back.
-The goal is to (a) target the exact pinned version used by the repo and (b) avoid hallucinated APIs.
+This document defines how to produce high-signal queries to the Context7 MCP server and how to validate what comes
+back. The goal is to (a) target the exact pinned version used by the repo and (b) avoid hallucinated APIs.
 
 ## 1) Always collect the 4 inputs before querying
 
@@ -13,8 +12,8 @@ Before making a Context7 query, extract:
 3. **Topic**: what you need (API reference, configuration, migration, auth, error, example)
 4. **Target surface**: symbol / header / module / option name / exact error message
 
-If any of these is unclear, resolve it from project specifications first
-(lockfiles/manifests/scripts). If still ambiguous, ask.
+If any of these is unclear, resolve it from project specifications first (lockfiles/manifests/scripts). If still
+ambiguous, ask.
 
 ## 2) Version resolution rules by ecosystem
 
@@ -28,8 +27,8 @@ Prefer these sources (highest signal first):
 - `bun.lockb`
 - `package.json` dependency ranges (only if no lockfile exists)
 
-If multiple lockfiles exist or the package manager is unclear, treat it as
-ambiguous: follow the build scripts/CI commands, or ask.
+If multiple lockfiles exist or the package manager is unclear, treat it as ambiguous: follow the build scripts/CI
+commands, or ask.
 
 ### Python
 
@@ -73,15 +72,15 @@ If both a lockfile and requirements files exist, follow the tool invoked by scri
 
 ### C / C++
 
-The critical step is identifying *how* the dependency is obtained, then extracting the pinned ref.
-Treat moving targets (e.g., FetchContent `GIT_TAG` set to a branch like
-`main`/`master`) as unpinned; call it out and ask before relying on docs.
+The critical step is identifying *how* the dependency is obtained, then extracting the pinned ref. Treat moving
+targets (e.g., FetchContent `GIT_TAG` set to a branch like `main`/`master`) as unpinned; call it out and ask before
+relying on docs.
 
 Prefer these sources (highest signal first):
 
 - **vcpkg**
-  - `vcpkg.json` (manifest) + `vcpkg-configuration.json`
-    (registry/builtin-baseline) and any lock/baseline files used by the repo
+  - `vcpkg.json` (manifest) + `vcpkg-configuration.json` (registry/builtin-baseline) and any lock/baseline files
+    used by the repo
 - **Conan**
   - `conan.lock` (if present), otherwise `conanfile.py` / `conanfile.txt` + profiles used by CI
 - **CMake FetchContent / ExternalProject**
@@ -92,8 +91,8 @@ Prefer these sources (highest signal first):
 - **vendored source**
   - `third_party/` / `vendor/` directory contents (treat as truth; upstream docs may not match)
 - **system package managers**
-  - Homebrew/Apt/DNF/etc. only if the repo explicitly depends on system
-    packages (then read CI scripts to learn the expected version)
+  - Homebrew/Apt/DNF/etc. only if the repo explicitly depends on system packages (then read CI scripts to learn the
+    expected version)
 
 Also collect build context because it affects API/ABI:
 
@@ -102,18 +101,15 @@ Also collect build context because it affects API/ABI:
 
 ## 2.5) Verify the resolved version (when ambiguous)
 
-If the pinned version is unclear (no lockfile, multiple lockfiles, vendored
-patches, or moving git refs), confirm the *resolved* version locally before
-relying on docs.
+If the pinned version is unclear (no lockfile, multiple lockfiles, vendored patches, or moving git refs), confirm the
+*resolved* version locally before relying on docs.
 
-- Node: use package-manager-specific equivalent commands (for example:
-  `npm ls <pkg>`, `pnpm why <pkg>`, `yarn why <pkg>`) and/or inspect
-  `node_modules/<pkg>/package.json` (when `node_modules` exists).
-- Python: prefer `python -m pip show <pkg>` (or inspect the installed
-  distribution metadata) and confirm `__version__` when available.
-- C/C++: confirm vcpkg baseline/lock, conan.lock, FetchContent `GIT_TAG`/hash,
-  or the submodule commit; for vendored deps, treat `third_party/` as
-  authoritative.
+- Node: use package-manager-specific equivalent commands (for example: `npm ls <pkg>`, `pnpm why <pkg>`,
+  `yarn why <pkg>`) and/or inspect `node_modules/<pkg>/package.json` (when `node_modules` exists).
+- Python: prefer `python -m pip show <pkg>` (or inspect the installed distribution metadata) and confirm
+  `__version__` when available.
+- C/C++: confirm vcpkg baseline/lock, conan.lock, FetchContent `GIT_TAG`/hash, or the submodule commit; for
+  vendored deps, treat `third_party/` as authoritative.
 
 ## 3) Query formulation templates
 
@@ -123,8 +119,7 @@ relying on docs.
 
 ### When errors drive the work
 
-Include the exact error message (or its distinctive fragment):
-`"<dependency> <version> <error message> <symbol>"`
+Include the exact error message (or its distinctive fragment): `"<dependency> <version> <error message> <symbol>"`
 
 ### C / C++ specific template
 
@@ -136,8 +131,7 @@ Because ABI, compiler, and build options matter:
 
 ## 4) Tighten in at most 2 follow-ups
 
-Start with one query.
-Then refine with up to 2 follow-ups:
+Start with one query. Then refine with up to 2 follow-ups:
 
 - add the exact symbol/header/option
 - add the exact error string
@@ -154,8 +148,7 @@ Before committing code based on docs:
   - TS: installed type defs in `node_modules` / `.d.ts`
   - Python: installed package docs/source in venv/site-packages
   - C/C++: the installed headers and exported symbols (headers are the source of truth)
-- If the repo vendors/patches a dependency, treat local source as authoritative
-  and call out divergences.
+- If the repo vendors/patches a dependency, treat local source as authoritative and call out divergences.
 
 ## 6) If Context7 cannot confirm
 

@@ -15,8 +15,8 @@ Prefer out-of-source builds:
 - Configure: `cmake -S . -B build`
 - Build: `cmake --build build --parallel`
 - Test: `ctest --test-dir build --output-on-failure`
-- For multi-config generators (Visual Studio, Xcode, Ninja Multi-Config), add
-  `--config <Debug|Release>` to `cmake --build`.
+- For multi-config generators (Visual Studio, Xcode, Ninja Multi-Config), add `--config <Debug|Release>` to
+  `cmake --build`.
 
 If `CMakePresets.json` exists, prefer presets:
 
