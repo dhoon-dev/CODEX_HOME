@@ -1,0 +1,38 @@
+globs:
+  - "AGENTS.md"
+  - "docs/**/*.md"
+
+config:
+  # Line length
+  MD013:
+    line_length: 100
+    code_blocks: false
+    tables: false
+
+  # Disallow raw HTML
+  MD033: true
+
+  # Heading style consistency
+  MD003:
+    style: atx
+
+  # Require blank line around headings
+  MD022: true
+
+  # Require blank line around lists
+  MD032: true
+
+  # No multiple consecutive blank lines
+  MD012:
+    maximum: 1
+
+  # No trailing spaces
+  MD009: true
+
+  # Ordered list style consistency
+  MD029:
+    style: ordered
+
+  # Fenced code blocks preferred
+  MD046:
+    style: fenced
